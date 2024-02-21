@@ -8,6 +8,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/message', messageRouter);
 
+app.get("/", (req, res) => {
+  res.send("hello world")
+})
+
 console.log(process.env.PORT)
 
 app.listen(process.env.PORT, () => {
