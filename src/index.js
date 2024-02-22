@@ -5,12 +5,15 @@ const messageRouter = require("./routes/messageRouter");
 const mongoose = require("mongoose");
 const http = require("http");
 const socketIo = require("socket.io");
+var cors = require('cors')
 const messageModel = require("./modal/messageModal");
 require("dotenv").config();
 const app = express();
 
 const server = http.createServer(app);
 const io = socketIo(server);
+
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use("/", messageRouter);
