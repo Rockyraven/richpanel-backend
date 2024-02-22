@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 })
 
 
-console.log(process.env.PORT)
+console.log(process.env.PORT, "with port number working")
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
