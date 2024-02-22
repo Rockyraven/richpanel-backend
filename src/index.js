@@ -7,6 +7,7 @@ const http = require("http");
 const socketIo = require("socket.io");
 var cors = require('cors')
 const messageModel = require("./modal/messageModal");
+const userRouter = require("./routes/userRouter");
 require("dotenv").config();
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/", messageRouter);
 app.get("/", (req, res) => {
   res.send("hello world");
 });
+app.use("/auth", userRouter);
 
 console.log(process.env.PORT, "with port number working");
 

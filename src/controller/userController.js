@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
-const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
+const userModel = require("../modal/userModal");
 
 // sign up controller 
 // which take name, username, email, and password
