@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(bodyParser.json());
-app.use('/message', messageRouter);
+app.use('/', messageRouter);
 
 app.get("/", (req, res) => {
   res.send("hello world")
