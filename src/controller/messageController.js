@@ -1,5 +1,7 @@
 require("dotenv").config();
-const request = require("request")
+const request = require("request");
+const messageModel = require("../modal/messageModal");
+const messageModal = require("../modal/messageModal");
 
 const getMessage = (req, res) => {
     res.send("working fine");
@@ -22,43 +24,49 @@ const getVerifyWebhook = (req, res) => {
 		}
 	}
 }
-const postWebhook = (req, res) => {
-	let body = req.body;
+const postWebhook = async (req, res) => {
+    let body = req.body;
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
 
         // Iterate over each entry - there may be multiple if batched
-        body.entry.forEach(function(entry) {
+        for (const entry of body.entry) {
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log("webhook message" ,webhook_event);
-            console.log("webhook message" ,webhook_event.message.text);
+            console.log("webhook message", webhook_event);
+            console.log("webhook message", webhook_event.message.text);
 
+            // Use try-catch to handle any potential errors during messageModal.create
+            try {
+                const result = await messageModal.create({ message: webhook_event.message.text });
+                console.log(result, "after data pushed");
+                // Get the sender PSID
+                let sender_psid = webhook_event.sender;
+                console.log('Sender PSID: ' + sender_psid.id);
 
-            // Get the sender PSID
-            let sender_psid = webhook_event.sender;
-            console.log('Sender PSID: ' + sender_psid.id);
-
-            // Check if the event is a message or postback and
-            // pass the event to the appropriate handler function
-            if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
-            } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
+                // Check if the event is a message or postback and
+                // pass the event to the appropriate handler function
+                if (webhook_event.message) {
+                    handleMessage(sender_psid, webhook_event.message);
+                } else if (webhook_event.postback) {
+                    handlePostback(sender_psid, webhook_event.postback);
+                }
+            } catch (error) {
+                console.error("Error creating message:", error);
             }
-
-        });
+        }
 
         // Return a '200 OK' response to all events
         res.status(200).send('EVENT_RECEIVED');
 
     } else {
-        // Return a '404 Not Found' if event is not from a page subscription
+        // Return a '404 Not Found' if the event is not from a page subscription
         res.sendStatus(404);
     }
-}
+};
+
 
 
 // Handles messages events
