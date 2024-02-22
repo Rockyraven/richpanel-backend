@@ -127,7 +127,7 @@ function handleMessage(sender_psid, message) {
 
     if(entityChosen === ""){
         //default
-        callSendAPI(sender_psid,`The bot is needed more trainings rocky,${message.text} ${sender_psid} try to say "thanks a lot" or "hi" to the bot` );
+        callSendAPI(sender_psid,`The bot is needed more trainings rocky, try to say "thanks a lot" or "hi" to the bot` );
     }else{
        if(entityChosen === "wit$greetings"){
            //send greetings message
