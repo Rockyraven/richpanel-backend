@@ -127,11 +127,11 @@ function handleMessage(sender_psid, message) {
 
     if(entityChosen === ""){
         //default
-        callSendAPI(sender_psid,`The bot is needed more training,${message} try to say "thanks a lot" or "hi" to the bot` );
+        callSendAPI(sender_psid,`The bot is needed more trainings rocky,${message} ${sender_psid} try to say "thanks a lot" or "hi" to the bot` );
     }else{
        if(entityChosen === "wit$greetings"){
            //send greetings message
-           callSendAPI(sender_psid,'Hi there! This bot is created by Hary Pham. Watch more videos on HaryPhamDev Channel!');
+           callSendAPI(sender_psid,`Hi there! This bot is created by Hary Pham. ${message} ${sender_psid} Watch more videos on HaryPhamDev Channel!`);
        }
        if(entityChosen === "wit$thanks"){
            //send thanks message
