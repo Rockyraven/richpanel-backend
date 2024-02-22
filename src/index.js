@@ -51,6 +51,11 @@ io.on("connection", (socket) => {
   });
 });
 
+app.get("/messagess", async (req, res) => {
+  const mess = await messageModel.find();
+  res.send(mess);
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
